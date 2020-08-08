@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <!-- <link rel="stylesheet" href="css/style.css"> -->
+  <title>COVID-19 Isolation Tracking</title>
+</head>
+
+<style type="text/css">
+	table, th, td{
+		border: 1px solid black;
+	}
+</style>
+
+<body>
+{% if loggedin %}
+	<a href="/logout">Logout</a>
+	<a href="/home">Home</a>
+	<br>
+{% endif %}
+<h1>COVID-19 14-day Isolation Tracking</h1>
+{% if not loggedin%}
+<form action="/login" method="POST">
+	<input type="submit" value = Login />
+</form>
+{% endif %}
+
+</body>
+
+<script></script>
+
+</html>
