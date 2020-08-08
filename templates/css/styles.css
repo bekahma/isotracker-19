@@ -4,12 +4,18 @@
 body {
     font-family: 'Open Sans';
     background-image: url(../assets/backgrounds/landing_page.png);
-    background-size: cover; 
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat-y;
     color: #472986;
 }
 
-.navbar-dark .navbar-nav .nav-item {
-    margin: 0 2em;
+nav {
+    margin-top: 1%;
+}
+
+.navbar-light .navbar-nav .nav-item {
+    margin: 0 1em;
 }
 
 .btn-outline-success {
@@ -18,9 +24,9 @@ body {
 }
 
 .landing {
-    margin-top: 20%;
-    margin-bottom: 20%;
-    align-content: center;
+    margin-top: 18%;
+    margin-bottom: 18%;
+    align-items: center;
 }
 
 .landing h1 {
@@ -31,4 +37,10 @@ body {
 
 .landing h5 {
     text-align: center;
+}
+
+#button {
+    text-align: center;
+    margin-top: 4%;
+    margin-bottom: 4%;
 }
