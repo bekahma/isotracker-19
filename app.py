@@ -16,7 +16,8 @@ conn = pymysql.connect(host='localhost',
                        charset='utf8mb4',
                        cursorclass=pymysql.cursors.DictCursor)
 
-#============== app =================
+#====================== APP =======================
+#-------------------- HOME? ----------------------
 @app.route('/')
 def public():
     loggedin=None
@@ -24,7 +25,7 @@ def public():
         loggedin=True
     return render_template('index.html', loggedin=loggedin)
 
-#---------login & authentication-------
+#-----------------LOGIN & authentication---------------
 @app.route('/login')
 def login():
     return render_template('login.html')
@@ -54,3 +55,24 @@ def loginAuth():
         # returns an error message to the html page
         error = 'Invalid login or username'
         return render_template('login.html', error=error)  # send the error msg to html
+
+
+#------------------- LOGOUT --------------------
+@app.route('/logout',methods=['GET','POST'])
+def logout():
+    if session.get("storedData") is not None:
+        session.pop("storedData")
+    session.pop('username')
+    return render_template("logout.html")
+
+
+
+#======================== RUN APP ============================
+app.secret_key = 'some key that you will never guess'
+# Run the app on localhost port 5000
+# debug = True -> you don't have to restart flask
+# for changes to go through, TURN OFF FOR PRODUCTION
+
+if __name__ == "__main__":
+    app.run('127.0.0.1', 5000, debug=True)
+
