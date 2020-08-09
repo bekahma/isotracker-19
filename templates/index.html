@@ -42,7 +42,7 @@
 					<li class="nav-item">
 						<a class="nav-link" href="#">Contact</a>
 				  </li>
-					<button class="btn btn-outline-success nav-item" type="button">Get Started</button>
+					<a href="#loginsection"><button class="btn btn-outline-success nav-item" type="button">Get Started</button></a>
 				  </ul>
 				</div>
 			  </div>
@@ -93,26 +93,26 @@
 
 		<!-- where the login portion should be -->
 		<!-- filler button for now -->
-		<section class="login">
+		<section class="login" id="loginsection">
 			<div class="container">
 				<h4>Login</h4>
-				<form id="login" method="get" action="login.php">    
-					<label><b>User Name     
-					</b>    
+				<form id="login" method="get" action="tracker.html">    
+					<label>
+						<b>Username</b>      
 					</label>    
 					<input type="text" name="Uname" id="Uname" placeholder="Username">    
 					<br><br>    
-					<label><b>Password     
-					</b>    
+					<label>
+						<b>Password</b>    
 					</label>    
 					<input type="Password" name="Pass" id="Pass" placeholder="Password">    
 					<br><br>    
-					<input type="button" name="log" id="log" value="Log In Here">       
+					<input type="button" name="log" id="log" value="Login">       
 					<br><br>    
 					<input type="checkbox" id="check">    
 					<span>Remember me</span>    
 					<br><br>    
-					<a href="#">Forgot Password</a>    
+					<a href="#">Forgot Password?</a>    
 				</form>     
 			</div>
 		</section>

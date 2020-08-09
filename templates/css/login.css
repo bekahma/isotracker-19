@@ -4,6 +4,13 @@
     margin-top: 2%;
     margin-bottom: 10%;
   }
+
+  .login h4 {
+    font-weight: bold;
+    font-size: 2em;
+    margin-top: 2%;
+    margin-bottom: 3%;
+  }
   
   #login {
     width: 382px;
@@ -11,9 +18,9 @@
     margin: auto;
     /* margin: 20px 0px 0px 350px; */
     padding: 20px;
-    background-color:	rgb(230,230,250);
-    border-radius:15px;
-    border: dashed;
+    background-color:	rgba(255,234,202,0.3);
+    border-radius: 10%;
+    border: dotted;
   }
   
   h2 {
@@ -30,7 +37,7 @@
   #Uname {
     width: 300px;
     height: 30px;
-    border: dashed;
+    /* border: dashed; */
     border-radius: 3px;
     padding-left: center;
   }
@@ -38,16 +45,15 @@
   #Pass {
     width: 300px;
     height: 30px;
-    border: dashed;
+    /* border: dashed; */
     border-radius: 3px;
     padding-left: center;
-  
   }
   
   #log {
     width: 100px;
     height: 40px;
-    border: dashed;
+    /* border: dashed; */
     border-radius: 20px;
     padding-left: 5px;
     color:#472986;
