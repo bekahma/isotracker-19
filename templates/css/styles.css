@@ -1,0 +1,46 @@
+/* font imports */ 
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+body {
+    font-family: 'Open Sans';
+    background-image: url(../assets/backgrounds/landing_page.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat-y;
+    color: #472986;
+}
+
+nav {
+    margin-top: 1%;
+}
+
+.navbar-light .navbar-nav .nav-item {
+    margin: 0 1em;
+}
+
+.btn-outline-success {
+    color: #472986;
+    border-color: #472986;
+}
+
+.landing {
+    margin-top: 18%;
+    margin-bottom: 18%;
+    align-items: center;
+}
+
+.landing h1 {
+    font-size: 3.5em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.landing h5 {
+    text-align: center;
+}
+
+#button {
+    text-align: center;
+    margin-top: 4%;
+    margin-bottom: 4%;
+}
