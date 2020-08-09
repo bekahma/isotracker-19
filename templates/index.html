@@ -9,7 +9,7 @@
 		<!-- External CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
-		
+
 		<title>COVID-19 Isolation Tracker</title>
 		<link rel="stylesheet" href={{ url_for('static', filename='css/styles.css') }}>
 		<link rel="stylesheet" href={{ url_for('static', filename='css/login.css') }}>
@@ -32,7 +32,7 @@
 			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			  </button>
-	  
+
 			  <div class="col-auto">
 				<div class="collapse navbar-collapse" id="navbarNav">
 				  <ul class="navbar-nav">
@@ -42,7 +42,7 @@
 					<li class="nav-item">
 						<a class="nav-link" href="#">Contact</a>
 				  </li>
-					<a href="#loginsection"><button class="btn btn-outline-success nav-item" type="button">Get Started</button></a>
+						<a href="#loginsection"><button class="btn btn-outline-success nav-item" type="button">Get Started</button></a>
 				  </ul>
 				</div>
 			  </div>
@@ -57,7 +57,7 @@
 				-->
 				<h5>Stay safe and monitor symptoms during these uncertain times.</h5>
 				<div id="button">
-					<button class="btn btn-outline-success btn-lg">Get Started</button>
+					<a href="#loginsection"><button class="btn btn-outline-success btn-lg">Get Started</button></a>
 				</div>
 			</div>
 		</section>
@@ -72,7 +72,7 @@
 					  		<p>Count down to the end of 14 days of self isolation with an interactive calendar.</p>
 						</div>
 					</div>
-				
+
 					<div class="desc col-sm-4">
 						<div class="desc-background">
 					  		<i class="fa fa-stethoscope"></i>
@@ -80,7 +80,7 @@
 					  		<p>Track any symptoms and chat with an AI chatbot tailored to your own needs.</p>
 						</div>
 					</div>
-				
+
 					<div class="desc col-sm-4">
 						<div class="desc-background">
 					  		<i class="fa fa-users"></i>
@@ -96,24 +96,24 @@
 		<section class="login" id="loginsection">
 			<div class="container">
 				<h4>Login</h4>
-				<form id="login" method="get" action="tracker.html">    
+				<form id="login" method="POST" action="/loginAuth">
 					<label>
-						<b>Username</b>      
-					</label>    
-					<input type="text" name="Uname" id="Uname" placeholder="Username">    
-					<br><br>    
+						<b>Username</b>
+					</label>
+					<input type="text" name="Uname" id="Uname" placeholder="Username" required/>
+					<br><br>
 					<label>
-						<b>Password</b>    
-					</label>    
-					<input type="Password" name="Pass" id="Pass" placeholder="Password">    
-					<br><br>    
-					<input type="button" name="log" id="log" value="Login">       
-					<br><br>    
-					<input type="checkbox" id="check">    
-					<span>Remember me</span>    
-					<br><br>    
-					<a href="#">Forgot Password?</a>    
-				</form>     
+						<b>Password</b>
+					</label>
+					<input type="Password" name="Pass" id="Pass" placeholder="Password" required/>
+					<br><br>
+					<input type="submit" name="log" id="log" value="Login">
+					<br><br>
+					<input type="checkbox" id="check">
+					<span>Remember me</span>
+					<br><br>
+					<a href="#">Forgot Password?</a>
+				</form>
 			</div>
 		</section>
 

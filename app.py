@@ -29,24 +29,24 @@ auth = firebase.auth()
 def public():
     return render_template('index.html')
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+# @app.route('/login')
+# def login():
+#     return render_template('login.html')
 
 
 @app.route('/loginAuth', methods=['GET', 'POST'])
 def loginAuth():
     if request.method == 'POST':
-        email = request.form['name']
-        password = request.form['pass']
+        email = request.form['Uname']
+        password = request.form['Pass']
         try:
             auth.sign_in_with_email_and_password('email','password')
             return 'Login is successful'
         except:
             error = 'Invalid login or username'
-            return render_template('login.html', error=error)
+            return render_template('tracker.html', error=error)
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET','POST'])
 def cal():
     creds = None
     SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
@@ -79,8 +79,14 @@ def cal():
     # start = event['start'].get('dateTime', event['start'].get('date'))
     # print(start, event['summary'])
     event_list = [event["summary"] for event in events]
-    
+
     return render_template('dashboard.html', events = events_list)
+
+@app.route('/logout', methods=['GET','POST'])
+def logout():
+    # logout the users
+    #TODO
+    return render_template('index.html');
 
 
 
