@@ -1,0 +1,9 @@
+#blogPost {
+  width: 40%;
+  height: 100px;
+}
+
+.showPosts{
+  margin-top: 5%;
+  font-size: 20px;
+}

@@ -42,12 +42,13 @@ def getPastData(uid, days):
                         rate = 1
                         break
                 elif key != 'date':
-                    if oneDay[key] == 1:
+                    if oneDay[key] == '1':
                         rate = 1
                         break
             pastData.append(rate)
         else:
             pastData.append(None)
+    print(pastData)
     return pastData
 
 @app.route('/', methods = ['GET', 'POST'])
@@ -222,7 +223,7 @@ def addPost():
             "blogPost": blogPost
         }
         db.child("posts").child(timestamp).set(data)
-        results = db.child("posts").order_by_key().limit_to_last(10).get()
+        results = db.child("posts").order_by_key().limit_to_last(20).get()
         posts = []
         for item in results.each():
             posts.append(item.val())
@@ -233,7 +234,7 @@ def addPost():
 @app.route('/getPost', methods=['GET', 'POST'] )
 def getPost():
     if session.get('uid'):
-        results = db.child("posts").order_by_key().limit_to_last(10).get()
+        results = db.child("posts").order_by_key().limit_to_last(20).get()
         posts = []
         for item in results.each():
             posts.append(item.val())

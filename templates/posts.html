@@ -1,27 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+
     <title>Post Sharing</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/styles.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/posts.css') }}>
 </head>
 <body>
-    <a href="/"> button to tracker </a>
-    <h2>Connect with great ideas and thoughts for an enjoyable quarantine</h2><br>
-    <div class="addPost">
-      <form id="add" method="POST" action="/addPost">
-          <label><b>User Name</b></label>
-          <input type="text" name="username" id="username" placeholder="User name">
-          <br><br>
-          <label><b>What do you want to share about your quarantine?</b></label>
-          <input type="text" name="blogPost" id="blogPost" placeholder="Share something!">
-          <br><br>
-          <input type="submit" value = Submit>
-      </form>
-    </div>
-    <div class="showPosts">
-      {% for item in posts %}
-        <p>{{item['username']}}: {{item['blogPost']}}</p>
-      {% endfor %}
-    </div>
+    <!-- Navbar -->
+		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #efe7ff;">
+			<div class="container">
+			  <a class="navbar-brand" href="#"><img src="static/assets/images/logo.png" alt="My test image" width="100" height="100"></a>
+			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+
+			  <div class="col-auto">
+				<div class="collapse navbar-collapse" id="navbarNav">
+				  <ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="#">Help</a>
+				    </li>
+					<a href="/"><button class="btn btn-outline-success nav-item" type="button">Tacker</button></a>
+					<a href="/logout"><button class="btn btn-outline-success nav-item" type="button">Logout</button></a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+    </nav>
+
+    <section class="blogPosts">
+      <div class="container">
+        <h2>Connect with great ideas and thoughts for an enjoyable quarantine!</h2>
+        <br>
+        <div class="addPost">
+          <form id="add" method="POST" action="/addPost">
+              <label><b>User Name</b></label>
+              <input type="text" name="username" id="username" placeholder="User name">
+              <br><br>
+              <label><b>What do you want to share about your quarantine?</b></label><br>
+              <input type="text" name="blogPost" id="blogPost" placeholder="Share something!">
+              <br><br>
+              <input type="submit" value = Submit>
+          </form>
+        </div>
+        <div class="showPosts">
+          {% for item in posts %}
+            <p><b>{{item['username']}}:</b> {{item['blogPost']}}</p>
+            <br>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
 </body>
 </html>

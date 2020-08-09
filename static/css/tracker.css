@@ -1,5 +1,5 @@
 .tracker {
-    margin-top: 8%;
+    margin-top: 1%;
     text-align: center;
 }
 
@@ -10,13 +10,17 @@
 
 .count-display {
     align-items: center;
+    text-align: center;
 }
 
 .count-display i {
     font-size: 30px;
 }
 
-table, th, td {
+table, tr, td {
+    margin-left: 41%;
+    margin-top:4%;
+    margin-bottom:3%;
     text-align: center;
 }
 
