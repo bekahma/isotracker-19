@@ -25,7 +25,7 @@ nav {
 
 .landing {
     margin-top: 18%;
-    margin-bottom: 18%;
+    margin-bottom: 22%;
     align-items: center;
 }
 
@@ -43,4 +43,24 @@ nav {
     text-align: center;
     margin-top: 4%;
     margin-bottom: 4%;
+}
+
+.features {
+    margin-top: 12%;
+    margin-bottom: 12%;
+}
+
+.desc {
+    text-align: center;
+}
+
+.desc p {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.desc i {
+    font-size: 45px;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
