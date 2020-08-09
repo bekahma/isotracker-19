@@ -12,6 +12,7 @@
 		
 		<title>COVID-19 Isolation Tracker</title>
 		<link rel="stylesheet" href="css/styles.css">
+		<link rel="stylesheet" href="css/login.css">
 	</head>
 
 	<!--
@@ -92,8 +93,28 @@
 
 		<!-- where the login portion should be -->
 		<!-- filler button for now -->
-		<section>
-			<a href="tracker.html"><button class="btn btn-outline-success btn-lg">Main Page</button></a>
+		<section class="login">
+			<div class="container">
+				<h4>Login</h4>
+				<form id="login" method="get" action="login.php">    
+					<label><b>User Name     
+					</b>    
+					</label>    
+					<input type="text" name="Uname" id="Uname" placeholder="Username">    
+					<br><br>    
+					<label><b>Password     
+					</b>    
+					</label>    
+					<input type="Password" name="Pass" id="Pass" placeholder="Password">    
+					<br><br>    
+					<input type="button" name="log" id="log" value="Log In Here">       
+					<br><br>    
+					<input type="checkbox" id="check">    
+					<span>Remember me</span>    
+					<br><br>    
+					<a href="#">Forgot Password</a>    
+				</form>     
+			</div>
 		</section>
 
 	<!--

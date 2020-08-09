@@ -1,17 +1,17 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #E6E6FA;
-    font-family: 'Arial';
+
+  .login {
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 10%;
   }
   
-  .login {
+  #login {
     width: 382px;
     overflow: hidden;
     margin: auto;
-    margin: 20px 0px 0px 350px;
+    /* margin: 20px 0px 0px 350px; */
     padding: 20px;
-    background:	rgb(230,230,250);
+    background-color:	rgb(230,230,250);
     border-radius:15px;
     border: dashed;
   }
@@ -60,6 +60,6 @@ body {
   
   a {
     float: right;
-    background-color:	#E6E6FA;
+    /* background-color:	#E6E6FA; */
   }
   
