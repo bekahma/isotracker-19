@@ -42,7 +42,7 @@
 					<li class="nav-item">
 						<a class="nav-link" href="#">Contact</a>
 				  </li>
-						<a href="#loginsection"><button class="btn btn-outline-success nav-item" type="button">Get Started</button></a>
+						<a href="/login"><button class="btn btn-outline-success nav-item" type="button">Log In</button></a>
 				  </ul>
 				</div>
 			  </div>
@@ -56,8 +56,13 @@
 				<img src="./assets/images/health_heart.png"/>
 				-->
 				<h5>Stay safe and monitor symptoms during these uncertain times.</h5>
-				<div id="button">
-					<a href="#loginsection"><button class="btn btn-outline-success btn-lg">Get Started</button></a>
+				<div id="container">
+					<div id="button">
+						<a href="/register"><button class="btn btn-outline-success btn-lg">First-Time User?</button></a>
+					</div>
+					<div id="button">
+						<button class="btn btn-outline-success btn-lg">Login</button>
+					</div> 
 				</div>
 			</div>
 		</section>
@@ -98,9 +103,9 @@
 				<h4>Login</h4>
 				<form id="login" method="POST" action="/loginAuth">
 					<label>
-						<b>Username</b>
+						<b>Email</b>
 					</label>
-					<input type="text" name="Uname" id="Uname" placeholder="Username" required/>
+					<input type="email" name="email" id="email" placeholder="Email" required/>
 					<br><br>
 					<label>
 						<b>Password</b>

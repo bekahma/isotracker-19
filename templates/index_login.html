@@ -1,34 +1,33 @@
 <head>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='css/login.css') }}/>
  </head>
 
  <!DOCTYPE html>
 <html>
 <head>
     <title>Login Form</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='css/login.css') }}>
 </head>
 <body>
-    <h2>Login Page</h2><br>
-    <div class="login">
-    <form id="login" method="post" action="/loginAuth">
-        <label><b>User Name
-        </b>
-        </label>
-        <input type="text" name="Uname" id="Uname" placeholder="Username">
-        <br><br>
-        <label><b>Password
-        </b>
-        </label>
-        <input type="Password" name="Pass" id="Pass" placeholder="Password">
-        <br><br>
-        <input type="submit" name="log" id="log" value="Log In Here">
-        <br><br>
-        <input type="checkbox" id="check">
-        <span>Remember me</span>
-        <br><br>
-        <a href="#">Forgot Password</a>
-    </form>
+    <h2>Login</h2>
+	<form id="login" method="POST" action="/loginAuth">
+		<label>
+			<b>Email</b>
+		</label>
+		<input type="email" name="email" id="email" placeholder="Email" required/>
+		<br><br>
+		<label>
+			<b>Password</b>
+		</label>
+		<input type="Password" name="Pass" id="Pass" placeholder="Password" required/>
+		<br><br>
+		<input type="submit" name="log" id="log" value="Login">
+		<br><br>
+		<input type="checkbox" id="check">
+		<span>Remember me</span>
+		<br><br>
+		<a href="#">Forgot Password?</a>
+	</form>
 </div>
 </body>
 </html>

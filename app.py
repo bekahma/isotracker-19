@@ -26,25 +26,32 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 
 @app.route('/', methods = ['GET', 'POST'])
-def public():
+def home():
     return render_template('index.html')
 
-# @app.route('/login')
-# def login():
-#     return render_template('login.html')
-
+@app.route('/login')
+def login():
+    return render_template('index_login.html')
 
 @app.route('/loginAuth', methods=['GET', 'POST'])
 def loginAuth():
     if request.method == 'POST':
-        email = request.form['Uname']
+        email = request.form['email']
         password = request.form['Pass']
-        try:
-            auth.sign_in_with_email_and_password('email','password')
-            return 'Login is successful'
-        except:
-            error = 'Invalid login or username'
-            return render_template('tracker.html', error=error)
+        auth.sign_in_with_email_and_password('email','password')
+        return render_template('tracker.html')
+
+@app.route('/register')
+def register():
+    return render_template('register.html')
+
+@app.route('/registration', methods=['GET', 'POST'])
+def enter_user():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['Pass']
+        user = auth.create_user_with_email_and_password(email, password)
+        return render_template('index_login.html')
 
 @app.route('/dashboard', methods=['GET','POST'])
 def cal():

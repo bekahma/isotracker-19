@@ -1,4 +1,13 @@
 
+  body {
+    font-family: 'Open Sans';
+    /* background-size: cover;
+    background-position: center;
+    background-repeat: repeat-y;
+    */
+    color: #472986;
+    align-content: center;
+  }
   .login {
     text-align: center;
     margin-top: 2%;
