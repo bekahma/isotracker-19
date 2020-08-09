@@ -1,0 +1,25 @@
+.tracker {
+    margin-top: 8%;
+    text-align: center;
+}
+
+.tracker h1 {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.count-display {
+    align-items: center;
+}
+
+.count-display i {
+    font-size: 30px;
+}
+
+table, th, td {
+    text-align: center;
+}
+
+.count-display i .fa-check-circle {
+    color: #C5C5FF;
+}
