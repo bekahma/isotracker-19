@@ -46,70 +46,120 @@
                 <div class="count-display">
                     <table>
                         <tr>
-                            <th>Mon</th>
-                            <th>Tues</th>
-                            <th>Wed</th>
-                            <th>Thurs</th>
-                            <th>Fri</th>
-                            <th>Sat</th>
-                            <th>Sun</th>
+														{% for i in range(7)%}
+															{% if pastData[i] == None%}
+																<td><i class="fa fa-circle"></i></td>
+															{% elif pastData[i] == 0%}
+																<td><i class="fa fa-check-circle"></i></td>
+															{% else %}
+																<td><i class="fa fa-check-circle"></i></td>
+															{% endif %}
+														{% endfor %}
                         </tr>
                         <tr>
-                            <td><i class="fa fa-check-circle"></i></td>
-                            <td><i class="fa fa-check-circle"></i></td>
-                            <td><i class="fa fa-check-circle"></i></td>
-                            <td><i class="fa fa-check-circle"></i></td>
-                            <td><i class="fa fa-check-circle"></i></td>
-                            <td><i class="fa fa-check-circle"></i></td>
-                            <td><i class="fa fa-circle"></i></td>
-                        </tr>
-                        <tr>
-                            <td><i class="fa fa-circle"></i></td>
-                            <td><i class="fa fa-circle"></i></td>
-                            <td><i class="fa fa-circle"></i></td>
-                            <td><i class="fa fa-circle"></i></td>
-                            <td><i class="fa fa-circle"></i></td>
-                            <td><i class="fa fa-circle"></i></td>
-                            <td><i class="fa fa-circle"></i></td>
+														{% for i in range(7, 14)%}
+															{% if pastData[i] == None%}
+																<td><i class="fa fa-circle"></i></td>
+															{% elif pastData[i] == 0%}
+																<td><i class="fa fa-check-circle"></i></td>
+															{% else %}
+																<td><i class="fa fa-check-circle"></i></td>
+															{% endif %}
+														{% endfor %}
                         </tr>
                     </table>
                 </div>
             </div>
 						<br>
+						{% if daysLeft > 0 %}
 						<div class="container">
-                <h4>Checklist</h4>
-                <div class="count-display">
-                    <table>
-                        <form id="checkbox" method="POST" action="/checklist" >
-													<label><b>Body Temperature </b></label>
-													<input type="number" name="temperature" id="temperature" step=0.1 value="{{data['temperature']}}" placeholder="Body Temperature">°C/°F
-										  		<br><br>
-													<b>Cough</b>
-													{% if data['cough'] == '1' %}
-									          <input type="checkbox" id="cough" name="cough" value=1 checked/>
-									        {% else %}
-									          <input type="checkbox" id="cough" name="cough" value=1 />
-									        {% endif %}
-										  		<br><br>
-													<label><b>Headache</b></label>
-													{% if data['headache'] == '1' %}
-														<input type="checkbox" id="headache" name="headache" value=1 checked/>
-													{% else %}
-														<input type="checkbox" id="headache" name="headache" value=1 />
-													{% endif %}
-										  		<br><br>
-													<label><b>Fatigue</b></label>
-													{% if data['fatigue'] == '1' %}
-														<input type="checkbox" id="fatigue" name="fatigue" value=1 checked/>
-													{% else %}
-														<input type="checkbox" id="fatigue" name="fatigue" value=1 />
-													{% endif %}
-										  		<br><br>
-													<input type="submit" value="Update">
-                        </form>
-                    </table>
-                </div>
+              <h4>Checklist for Today</h4>
+              <div class="count-display">
+                <table>
+                  <form id="checkbox" method="POST" action="/checklist" >
+										<label><b>Body Temperature </b></label>
+										<input type="number" name="temperature" id="temperature" step=0.1 value="{{data['temperature']}}" placeholder="Body Temperature">°C/°F
+							  		<br><br>
+										<b>Shortness of Breath</b>
+										{% if data['breath'] == '1' %}
+						          <input type="checkbox" id="breath" name="breath" value=1 checked/>
+						        {% else %}
+						          <input type="checkbox" id="breath" name="breath" value=1 />
+						        {% endif %}
+							  		<br><br>
+										<label><b>Cough</b></label>
+										{% if data['cough'] == '1' %}
+											<input type="checkbox" id="cough" name="cough" value=1 checked/>
+										{% else %}
+											<input type="checkbox" id="cough" name="cough" value=1 />
+										{% endif %}
+							  		<br><br>
+										<label><b>Fatigue</b></label>
+										{% if data['fatigue'] == '1' %}
+											<input type="checkbox" id="fatigue" name="fatigue" value=1 checked/>
+										{% else %}
+											<input type="checkbox" id="fatigue" name="fatigue" value=1 />
+										{% endif %}
+							  		<br><br>
+										<label><b>Body Aches</b></label>
+										{% if data['bodyache'] == '1' %}
+											<input type="checkbox" id="bodyache" name="bodyache" value=1 checked/>
+										{% else %}
+											<input type="checkbox" id="bodyache" name="bodyache" value=1 />
+										{% endif %}
+							  		<br><br>
+										<label><b>Headache</b></label>
+										{% if data['headache'] == '1' %}
+											<input type="checkbox" id="headache" name="headache" value=1 checked/>
+										{% else %}
+											<input type="checkbox" id="headache" name="headache" value=1 />
+										{% endif %}
+							  		<br><br>
+										<label><b>Loss of Taste or Smell</b></label>
+										{% if data['taste'] == '1' %}
+											<input type="checkbox" id="taste" name="taste" value=1 checked/>
+										{% else %}
+											<input type="checkbox" id="taste" name="taste" value=1 />
+										{% endif %}
+							  		<br><br>
+										<label><b>Sore Throat</b></label>
+										{% if data['throat'] == '1' %}
+											<input type="checkbox" id="throat" name="throat" value=1 checked/>
+										{% else %}
+											<input type="checkbox" id="throat" name="throat" value=1 />
+										{% endif %}
+							  		<br><br>
+										<label><b>Congestion or Runny Nose</b></label>
+										{% if data['nose'] == '1' %}
+											<input type="checkbox" id="nose" name="nose" value=1 checked/>
+										{% else %}
+											<input type="checkbox" id="nose" name="nose" value=1 />
+										{% endif %}
+							  		<br><br>
+										<label><b>Nausea or Vomiting</b></label>
+										{% if data['nausea'] == '1' %}
+											<input type="checkbox" id="nausea" name="nausea" value=1 checked/>
+										{% else %}
+											<input type="checkbox" id="nausea" name="nausea" value=1 />
+										{% endif %}
+							  		<br><br>
+										<label><b>Diarrhea</b></label>
+										{% if data['diarrhea'] == '1' %}
+											<input type="checkbox" id="diarrhea" name="diarrhea" value=1 checked/>
+										{% else %}
+											<input type="checkbox" id="diarrhea" name="diarrhea" value=1 />
+										{% endif %}
+							  		<br><br>
+										<input type="submit" value="Update">
+                  </form>
+                </table>
+              </div>
             </div>
+						{% else %}
+						<div class="container">
+							<h1>{{data}}</h1>
+						</div>
+						{% endif %}
         </section>
 
 

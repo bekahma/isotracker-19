@@ -32,13 +32,38 @@ def public():
     if session != {}:
         loggedin=True
         uid = session['uid']
-        data = db.child("users").child(uid).get().val()
-        startDate = datetime.strptime(data["startDate"], '%Y-%m-%d-%H:%M:%S')
+        generalData = db.child("users").child(uid).get().val()
+        startDate = datetime.strptime(generalData["startDate"], '%Y-%m-%d-%H:%M:%S')
         today = datetime.now()
         days = abs((today - startDate).days)
         daysLeft = 14 - days
         today = today.strftime('%Y-%m-%d')
-        return render_template("tracker.html", data=data, daysLeft=daysLeft, today=today)
+        pastData = []
+        if daysLeft <= 0:
+            daysLeft = 0
+            data = "Congratulations! You've finished your 14-day quarantine!"
+        else:
+            #get latest data
+            for day in range(14):
+                if day <= days:
+                    oneDay = db.child("users").child(uid).child(14 - day).get().val()
+                    rate = 0
+                    for key in oneDay.keys():
+                        if key == 'temperature':
+                            if float(oneDay[key]) >= 37.3:
+                                rate = 1
+                                break
+                        elif key != 'date':
+                            if oneDay[key] == 1:
+                                rate = 1
+                                break
+                    pastData.append(rate)
+                else:
+                    pastData.append(None)
+            data = db.child("users").child(uid).child(daysLeft).get().val()
+            if not data:
+                data = db.child("users").child(uid).child(daysLeft+1).get().val()
+        return render_template("tracker.html", pastData=pastData, data=data, daysLeft=daysLeft, today=today)
     return render_template('index.html', loggedin=loggedin)
 
 #--------------register
@@ -57,6 +82,7 @@ def enter_user():
             uid = user['localId']
             today = datetime.now()
             today = today.strftime("%Y-%m-%d-%H:%M:%S")
+            # today = '2020-06-20-00:00:00'
             #set up db item for user with key=uid
             data = {
                 "email": email,
@@ -64,11 +90,18 @@ def enter_user():
             }
             db.child("users").child(uid).set(data)
             moreData = {
-                "temperature": 37.0,
+                "date": today,
+                "temperature": 0.0,
+                "breath": 0,
                 "cough": 0,
-                "headache": 0,
                 "fatigue": 0,
-                "other": None
+                "bodyache": 0,
+                "headache": 0,
+                "taste": 0,
+                "throat": 0,
+                "nose":0,
+                "nausea":0,
+                "diarrhea":0
             }
             db.child("users").child(uid).child(14).set(moreData)
             return render_template('index_login.html')
@@ -100,24 +133,51 @@ def loginAuth():
             days = abs((today - startDate).days)
             daysLeft = 14 - days
             today = today.strftime('%Y-%m-%d')
-            #get latest data
-            data = db.child("users").child(uid).child(daysLeft).get().val()
-            if not data:
-                data = db.child("users").child(uid).child(daysLeft+1).get().val()
-            return render_template("tracker.html", data=data, daysLeft=daysLeft, today=today)
+            pastData = []
+            if daysLeft <= 0:
+                daysLeft = 0
+                data = "Congratulations! You've finished your 14-day quarantine!"
+            else:
+                #get latest data
+                for day in range(14):
+                    if day <= days:
+                        oneDay = db.child("users").child(uid).child(14 - day).get().val()
+                        rate = 0
+                        for key in oneDay.keys():
+                            if key == 'temperature':
+                                if float(oneDay[key]) >= 37.3:
+                                    rate = 1
+                                    break
+                            elif key != 'date':
+                                if oneDay[key] == 1:
+                                    rate = 1
+                                    break
+                        pastData.append(rate)
+                    else:
+                        pastData.append(None)
+                data = db.child("users").child(uid).child(daysLeft).get().val()
+                if not data:
+                    data = db.child("users").child(uid).child(daysLeft+1).get().val()
+            return render_template("tracker.html", pastData=pastData, data=data, daysLeft=daysLeft, today=today)
         except:
             return render_template('index_login.html')
 
 
-#-----------------update
+#-----------------tracker update
 @app.route('/checklist', methods=['GET','POST'])
 def checklist():
     if request.method == 'POST':
         temperature = request.form['temperature']
+        breath = request.form.get('breath', 0)
         cough = request.form.get('cough', 0)
-        headache = request.form.get('headache', 0)
         fatigue = request.form.get('fatigue', 0)
-        print(cough, headache, fatigue)
+        bodyache = request.form.get('bodyache', 0)
+        headache = request.form.get('headache', 0)
+        taste = request.form.get('taste', 0)
+        throat = request.form.get('throat', 0)
+        nose = request.form.get('nose', 0)
+        nausea = request.form.get('nausea', 0)
+        diarrhea = request.form.get('diarrhea', 0)
         try:
             uid = session['uid']
             #get days
@@ -127,22 +187,48 @@ def checklist():
             days = abs((today - startDate).days)
             daysLeft = 14 - days
             today = today.strftime('%Y-%m-%d')
+            pastData = []
             #get old data
-            #skip
+            for day in range(14):
+                if day <= days:
+                    oneDay = db.child("users").child(uid).child(14 - day).get().val()
+                    rate = 0
+                    for key in oneDay.keys():
+                        if key == 'temperature':
+                            if float(oneDay[key]) >= 37.3:
+                                rate = 1
+                                break
+                        elif key != 'date':
+                            if oneDay[key] == 1:
+                                rate = 1
+                                break
+                    pastData.append(rate)
+                else:
+                    pastData.append(None)
             #get new data
             newData = {
+                "date": today,
                 "temperature": temperature,
+                "breath": breath,
                 "cough": cough,
+                "fatigue": fatigue,
+                "bodyache": bodyache,
                 "headache": headache,
-                "fatigue": fatigue
+                "taste": taste,
+                "throat": throat,
+                "nose":nose,
+                "nausea":nausea,
+                "diarrhea":diarrhea
             }
             if db.child("users").child(uid).child(daysLeft).get():
                 db.child("users").child(uid).child(daysLeft).update(newData)
             else:
                 db.child("users").child(uid).child(daysLeft).set(newData)
-            return render_template("tracker.html", data=newData, daysLeft=daysLeft, today=today)
+            return render_template("tracker.html", pastData=pastData, data=newData, daysLeft=daysLeft, today=today)
         except:
             return render_template("tracker.html", data="error", daysLeft="error", today="error")
+
+
 
 @app.route('/logout', methods=['GET','POST'])
 def logout():
