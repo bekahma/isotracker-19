@@ -1,7 +1,7 @@
 from  __future__  import print_function
 import pyrebase
 from flask import *
-import datetime
+from datetime import datetime
 import pickle
 import os.path
 import googleapiclient.discovery
@@ -24,6 +24,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 
 auth = firebase.auth()
+db = firebase.database()
 
 @app.route('/', methods = ['GET', 'POST'])
 def home():
@@ -40,6 +41,14 @@ def loginAuth():
         password = request.form['Pass']
         try:
             user = auth.sign_in_with_email_and_password(email,password)
+            uid = user['localId']
+            data = db.child("users").child(uid).get()
+            print(data)
+            today = datetime.now()
+            startDate = datetime.strptime(data["startDate"], '%Y-%m-%d-%H:%M:%S')
+            days = abs((today - startDate).days)
+            daysLeft = 14 - days
+            print(daysLeft)
             return render_template('tracker.html')
         except:
             return render_template('index_login.html')
@@ -54,8 +63,25 @@ def enter_user():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['Pass']
-        user = auth.create_user_with_email_and_password(email, password)
-        return render_template('index_login.html')
+        try:
+            user = auth.create_user_with_email_and_password(email, password)
+            uid = user['localId']
+            today = datetime.now()
+            today = today.strftime("%Y-%m-%d-%H:%M:%S")
+            print(today)
+            data = {
+                "email": email,
+                "startDate": today,
+                "temperature": 37.0,
+                "cough": False,
+                "stomachAche": False,
+                "headAche": False,
+                "otherSymptoms": None,
+            }
+            db.child("users").child(uid).set(data)
+            return render_template('index_login.html')
+        except:
+            return render_template('register.html')
 
 @app.route('/dashboard', methods=['GET','POST'])
 def cal():
