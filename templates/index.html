@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
 
-		<title>COVID-19 Isolation Tracker</title>
+		<title>ISOTRACKER-19</title>
 		<link rel="stylesheet" href={{ url_for('static', filename='css/styles.css') }}>
 		<!-- <link rel="stylesheet" href={{ url_for('static', filename='css/login.css') }}> -->
 	</head>
@@ -28,7 +28,7 @@
 		<!-- Navbar -->
 		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #efe7ff;">
 			<div class="container">
-			  <a class="navbar-brand" href="#">LOGO</a>
+			  <a class="navbar-brand" href="#"><img src="static/assets/images/logo.png" alt="My test image" width="140" height="140"></a>
 			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			  </button>
@@ -51,22 +51,20 @@
 
 		<section class="landing">
 			<div class="container">
-				<h1>COVID-19 Isolation Tracker</h1>
+				<h1>ISOTRACKER-19</h1>
 				<!--
 				<img src="./assets/images/health_heart.png"/>
 				-->
 				<h5>Stay safe and monitor symptoms during these uncertain times.</h5>
 				<h5>Your data is not shared with anyone without your permission.</h5>
-				<!--<div id="container">-->
-					<div class="row">
-						<div class="button">
-							<a href="/register"><button class="btn btn-outline-success btn-lg">First-Time User?</button></a>
-						</div>
-						<div class="button">
-							<a href='/login'><button class="btn btn-outline-success btn-lg">Login</button></a>
-						</div>
+				<div id="container">
+					<!--<div class="row">-->
+					<div id="button">
+						<a href="/register"><button class="btn btn-outline-success btn-lg">First-Time User?</button></a>
+						<a href='/login'><button class="btn btn-outline-success btn-lg">Login</button></a>
 					</div>
-				<!--</div>-->
+					<!--</div>-->
+				</div>
 			</div>
 		</section>
 
@@ -85,7 +83,7 @@
 						<div class="desc-background">
 					  		<i class="fa fa-stethoscope"></i>
 					  		<h4>Alert</h4>
-					  		<p>Track any symptoms and chat with an AI chatbot tailored to your own needs.</p>
+					  		<p>Track any symptoms through our up-to-date tracker of Covid-19 symptoms.</p>
 						</div>
 					</div>
 
@@ -93,7 +91,7 @@
 						<div class="desc-background">
 					  		<i class="fa fa-users"></i>
 					  		<h4>Informed</h4>
-					  		<p>Keep an eye on everyone in quarantine around you and build a community.</p>
+					  		<p>Build a community with other people by posting tips and tricks about quarantining safely.</p>
 						</div>
 					</div>
 			</div>
