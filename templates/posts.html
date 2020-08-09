@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post Sharing</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <a href="/"> button to tracker </a>
+    <h2>Connect with great ideas and thoughts for an enjoyable quarantine</h2><br>
+    <div class="addPost">
+      <form id="add" method="POST" action="/addPost">
+          <label><b>User Name</b></label>
+          <input type="text" name="username" id="username" placeholder="User name">
+          <br><br>
+          <label><b>What do you want to share about your quarantine?</b></label>
+          <input type="text" name="blogPost" id="blogPost" placeholder="Share something!">
+          <br><br>
+          <input type="submit" value = Submit>
+      </form>
+    </div>
+    <div class="showPosts">
+      {% for item in posts %}
+        <p>{{item['username']}}: {{item['blogPost']}}</p>
+      {% endfor %}
+    </div>
+</body>
+</html>

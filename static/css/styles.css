@@ -42,11 +42,15 @@ nav {
 }
 
 #button {
-    text-align:center
+    display: inline-block
     margin-top: 4%;
     margin-bottom: 4%;
 }
-
+#button1 {
+    float: left;
+    margin-top: 4%;
+    margin-bottom: 4%;
+}
 #container{
     text-align: center;
 }

@@ -26,6 +26,10 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
 
+def noquote(s):
+    return s
+pyrebase.pyrebase.quote = noquote
+
 def getPastData(uid, days):
     pastData = []
     for day in range(14):
@@ -156,7 +160,7 @@ def loginAuth():
 #-----------------tracker update
 @app.route('/checklist', methods=['GET','POST'])
 def checklist():
-    if request.method == 'POST':
+    if request.method == 'POST' and session.get('uid'):
         temperature = request.form['temperature']
         breath = request.form.get('breath', 0)
         cough = request.form.get('cough', 0)
@@ -203,13 +207,37 @@ def checklist():
         except:
             return render_template("tracker.html", data="error", daysLeft="error", today="error")
 
-#
-# #------share quarantine tips
-# @app.route('/communityPosts', methods=['GET', 'POST'] )
-# def communityPosts():
-#     if session.get('uid'):
-#
 
+#------post about quarantine
+@app.route('/addPost', methods=['GET', 'POST'] )
+def addPost():
+    username = request.form['username']
+    blogPost = request.form['blogPost']
+    if request.method == 'POST' and session.get('uid'):
+        uid = session['uid']
+        timestamp = int(datetime.now().timestamp())
+        data = {
+            "uid": uid,
+            "username": username,
+            "blogPost": blogPost
+        }
+        db.child("posts").child(timestamp).set(data)
+        results = db.child("posts").order_by_key().limit_to_last(10).get()
+        posts = []
+        for item in results.each():
+            posts.append(item.val())
+        return render_template("posts.html", posts=posts)
+
+
+#------post about quarantine
+@app.route('/getPost', methods=['GET', 'POST'] )
+def getPost():
+    if session.get('uid'):
+        results = db.child("posts").order_by_key().limit_to_last(10).get()
+        posts = []
+        for item in results.each():
+            posts.append(item.val())
+        return render_template("posts.html", posts=posts)
 
 
 @app.route('/logout', methods=['GET','POST'])
