@@ -40,15 +40,16 @@ def loginAuth():
         email = request.form['email']
         password = request.form['Pass']
         try:
+            #user sign in
             user = auth.sign_in_with_email_and_password(email,password)
+            #get user data from db
             uid = user['localId']
-            data = db.child("users").child(uid).get()
-            print(data)
-            today = datetime.now()
+            data = db.child("users").child(uid).get().val()
+            #calculate days left
             startDate = datetime.strptime(data["startDate"], '%Y-%m-%d-%H:%M:%S')
+            today = datetime.now()
             days = abs((today - startDate).days)
             daysLeft = 14 - days
-            print(daysLeft)
             return render_template('tracker.html')
         except:
             return render_template('index_login.html')
@@ -64,11 +65,12 @@ def enter_user():
         email = request.form['email']
         password = request.form['Pass']
         try:
+            #create new user
             user = auth.create_user_with_email_and_password(email, password)
             uid = user['localId']
             today = datetime.now()
             today = today.strftime("%Y-%m-%d-%H:%M:%S")
-            print(today)
+            #set up db item for user with key=uid
             data = {
                 "email": email,
                 "startDate": today,
@@ -121,8 +123,7 @@ def cal():
 
 @app.route('/logout', methods=['GET','POST'])
 def logout():
-    # logout the users
-    #TODO
+    #logout the user
     return render_template('index.html');
 
 

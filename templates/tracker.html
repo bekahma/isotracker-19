@@ -77,6 +77,28 @@
             </div>
         </section>
 
+				<section class="checklist">
+            <div class="checkcontainer">
+                <h4>Checklist</h4>
+                <div class="count-display">
+                    <table>
+                        <form id="checkbox" method="POST" action="/checklist" >
+													<label><b>Body Temperature</b></label>
+													<input type="number" name="temperature" id="temperature" placeholder="Body Temperature">
+										  		<br><br>
+													<label><b>Cough</b></label>
+													<input type="radio" name="cough" id="cough" placeholder="Cough">
+										  		<br><br>
+													<label><b>Headache</b></label>
+													<input type="radio" name="headache" id="headache" placeholder="Headache">
+										  		<br><br>
+													<input type="submit" value="Update">
+                        </form>
+                    </table>
+                </div>
+            </div>
+        </section>
+
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
