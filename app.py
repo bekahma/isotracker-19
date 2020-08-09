@@ -26,6 +26,26 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
 
+def getPastData(uid, days):
+    pastData = []
+    for day in range(14):
+        if day <= days:
+            oneDay = db.child("users").child(uid).child(14 - day).get().val()
+            rate = 0
+            for key in oneDay.keys():
+                if key == 'temperature':
+                    if float(oneDay[key]) >= 37.3:
+                        rate = 1
+                        break
+                elif key != 'date':
+                    if oneDay[key] == 1:
+                        rate = 1
+                        break
+            pastData.append(rate)
+        else:
+            pastData.append(None)
+    return pastData
+
 @app.route('/', methods = ['GET', 'POST'])
 def public():
     loggedin=None
@@ -38,28 +58,13 @@ def public():
         days = abs((today - startDate).days)
         daysLeft = 14 - days
         today = today.strftime('%Y-%m-%d')
-        pastData = []
         if daysLeft <= 0:
             daysLeft = 0
             data = "Congratulations! You've finished your 14-day quarantine!"
+            pastData = []
         else:
-            #get latest data
-            for day in range(14):
-                if day <= days:
-                    oneDay = db.child("users").child(uid).child(14 - day).get().val()
-                    rate = 0
-                    for key in oneDay.keys():
-                        if key == 'temperature':
-                            if float(oneDay[key]) >= 37.3:
-                                rate = 1
-                                break
-                        elif key != 'date':
-                            if oneDay[key] == 1:
-                                rate = 1
-                                break
-                    pastData.append(rate)
-                else:
-                    pastData.append(None)
+            #get old data
+            pastData = getPastData(uid, days)
             data = db.child("users").child(uid).child(daysLeft).get().val()
             if not data:
                 data = db.child("users").child(uid).child(daysLeft+1).get().val()
@@ -133,28 +138,13 @@ def loginAuth():
             days = abs((today - startDate).days)
             daysLeft = 14 - days
             today = today.strftime('%Y-%m-%d')
-            pastData = []
             if daysLeft <= 0:
                 daysLeft = 0
                 data = "Congratulations! You've finished your 14-day quarantine!"
+                pastData = []
             else:
-                #get latest data
-                for day in range(14):
-                    if day <= days:
-                        oneDay = db.child("users").child(uid).child(14 - day).get().val()
-                        rate = 0
-                        for key in oneDay.keys():
-                            if key == 'temperature':
-                                if float(oneDay[key]) >= 37.3:
-                                    rate = 1
-                                    break
-                            elif key != 'date':
-                                if oneDay[key] == 1:
-                                    rate = 1
-                                    break
-                        pastData.append(rate)
-                    else:
-                        pastData.append(None)
+                #get old data
+                pastData = getPastData(uid, days)
                 data = db.child("users").child(uid).child(daysLeft).get().val()
                 if not data:
                     data = db.child("users").child(uid).child(daysLeft+1).get().val()
@@ -189,22 +179,7 @@ def checklist():
             today = today.strftime('%Y-%m-%d')
             pastData = []
             #get old data
-            for day in range(14):
-                if day <= days:
-                    oneDay = db.child("users").child(uid).child(14 - day).get().val()
-                    rate = 0
-                    for key in oneDay.keys():
-                        if key == 'temperature':
-                            if float(oneDay[key]) >= 37.3:
-                                rate = 1
-                                break
-                        elif key != 'date':
-                            if oneDay[key] == 1:
-                                rate = 1
-                                break
-                    pastData.append(rate)
-                else:
-                    pastData.append(None)
+            pastData = getPastData(uid, days)
             #get new data
             newData = {
                 "date": today,
@@ -227,6 +202,13 @@ def checklist():
             return render_template("tracker.html", pastData=pastData, data=newData, daysLeft=daysLeft, today=today)
         except:
             return render_template("tracker.html", data="error", daysLeft="error", today="error")
+
+#
+# #------share quarantine tips
+# @app.route('/communityPosts', methods=['GET', 'POST'] )
+# def communityPosts():
+#     if session.get('uid'):
+#
 
 
 
