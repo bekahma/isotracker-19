@@ -41,8 +41,8 @@
 
         <section class="tracker">
             <div class="container">
-                <h4>Sunday, August 9th, 2020</h4>
-                <h1>8 days left</h1>
+                <h4>{{today}}</h4>
+                <h1>{{daysLeft}} days left</h1>
                 <div class="count-display">
                     <table>
                         <tr>
@@ -75,22 +75,35 @@
                     </table>
                 </div>
             </div>
-        </section>
-
-				<section class="checklist">
-            <div class="checkcontainer">
+						<br>
+						<div class="container">
                 <h4>Checklist</h4>
                 <div class="count-display">
                     <table>
                         <form id="checkbox" method="POST" action="/checklist" >
-													<label><b>Body Temperature</b></label>
-													<input type="number" name="temperature" id="temperature" placeholder="Body Temperature">
+													<label><b>Body Temperature </b></label>
+													<input type="number" name="temperature" id="temperature" step=0.1 value="{{data['temperature']}}" placeholder="Body Temperature">°C/°F
 										  		<br><br>
-													<label><b>Cough</b></label>
-													<input type="radio" name="cough" id="cough" placeholder="Cough">
+													<b>Cough</b>
+													{% if data['cough'] == '1' %}
+									          <input type="checkbox" id="cough" name="cough" value=1 checked/>
+									        {% else %}
+									          <input type="checkbox" id="cough" name="cough" value=1 />
+									        {% endif %}
 										  		<br><br>
 													<label><b>Headache</b></label>
-													<input type="radio" name="headache" id="headache" placeholder="Headache">
+													{% if data['headache'] == '1' %}
+														<input type="checkbox" id="headache" name="headache" value=1 checked/>
+													{% else %}
+														<input type="checkbox" id="headache" name="headache" value=1 />
+													{% endif %}
+										  		<br><br>
+													<label><b>Fatigue</b></label>
+													{% if data['fatigue'] == '1' %}
+														<input type="checkbox" id="fatigue" name="fatigue" value=1 checked/>
+													{% else %}
+														<input type="checkbox" id="fatigue" name="fatigue" value=1 />
+													{% endif %}
 										  		<br><br>
 													<input type="submit" value="Update">
                         </form>
@@ -98,6 +111,7 @@
                 </div>
             </div>
         </section>
+
 
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->

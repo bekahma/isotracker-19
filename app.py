@@ -27,34 +27,21 @@ auth = firebase.auth()
 db = firebase.database()
 
 @app.route('/', methods = ['GET', 'POST'])
-def home():
-    return render_template('index.html')
+def public():
+    loggedin=None
+    if session != {}:
+        loggedin=True
+        uid = session['uid']
+        data = db.child("users").child(uid).get().val()
+        startDate = datetime.strptime(data["startDate"], '%Y-%m-%d-%H:%M:%S')
+        today = datetime.now()
+        days = abs((today - startDate).days)
+        daysLeft = 14 - days
+        today = today.strftime('%Y-%m-%d')
+        return render_template("tracker.html", data=data, daysLeft=daysLeft, today=today)
+    return render_template('index.html', loggedin=loggedin)
 
-@app.route('/login')
-def login():
-    return render_template('index_login.html')
-
-@app.route('/loginAuth', methods=['GET', 'POST'])
-def loginAuth():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['Pass']
-        try:
-            #user sign in
-            user = auth.sign_in_with_email_and_password(email,password)
-            #get user data from db
-            uid = user['localId']
-            data = db.child("users").child(uid).get().val()
-            #calculate days left
-            startDate = datetime.strptime(data["startDate"], '%Y-%m-%d-%H:%M:%S')
-            today = datetime.now()
-            days = abs((today - startDate).days)
-            daysLeft = 14 - days
-            return render_template('tracker.html')
-        except:
-            return render_template('index_login.html')
-
-
+#--------------register
 @app.route('/register')
 def register():
     return render_template('register.html')
@@ -73,17 +60,96 @@ def enter_user():
             #set up db item for user with key=uid
             data = {
                 "email": email,
-                "startDate": today,
-                "temperature": 37.0,
-                "cough": False,
-                "stomachAche": False,
-                "headAche": False,
-                "otherSymptoms": None,
+                "startDate": today
             }
             db.child("users").child(uid).set(data)
+            moreData = {
+                "temperature": 37.0,
+                "cough": 0,
+                "headache": 0,
+                "fatigue": 0,
+                "other": None
+            }
+            db.child("users").child(uid).child(14).set(moreData)
             return render_template('index_login.html')
         except:
             return render_template('register.html')
+
+
+#--------login
+@app.route('/login')
+def login():
+    return render_template('index_login.html')
+
+@app.route('/loginAuth', methods=['GET', 'POST'])
+def loginAuth():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['Pass']
+        try:
+            #user sign in
+            user = auth.sign_in_with_email_and_password(email,password)
+            #get user data from db
+            uid = user['localId']
+            #save session
+            session['uid'] = uid
+            #get days
+            generalData = db.child("users").child(uid).get().val()
+            startDate = datetime.strptime(generalData["startDate"], '%Y-%m-%d-%H:%M:%S')
+            today = datetime.now()
+            days = abs((today - startDate).days)
+            daysLeft = 14 - days
+            today = today.strftime('%Y-%m-%d')
+            #get latest data
+            data = db.child("users").child(uid).child(daysLeft).get().val()
+            if not data:
+                data = db.child("users").child(uid).child(daysLeft+1).get().val()
+            return render_template("tracker.html", data=data, daysLeft=daysLeft, today=today)
+        except:
+            return render_template('index_login.html')
+
+
+#-----------------update
+@app.route('/checklist', methods=['GET','POST'])
+def checklist():
+    if request.method == 'POST':
+        temperature = request.form['temperature']
+        cough = request.form.get('cough', 0)
+        headache = request.form.get('headache', 0)
+        fatigue = request.form.get('fatigue', 0)
+        print(cough, headache, fatigue)
+        try:
+            uid = session['uid']
+            #get days
+            generalData = db.child("users").child(uid).get().val()
+            startDate = datetime.strptime(generalData["startDate"], '%Y-%m-%d-%H:%M:%S')
+            today = datetime.now()
+            days = abs((today - startDate).days)
+            daysLeft = 14 - days
+            today = today.strftime('%Y-%m-%d')
+            #get old data
+            #skip
+            #get new data
+            newData = {
+                "temperature": temperature,
+                "cough": cough,
+                "headache": headache,
+                "fatigue": fatigue
+            }
+            if db.child("users").child(uid).child(daysLeft).get():
+                db.child("users").child(uid).child(daysLeft).update(newData)
+            else:
+                db.child("users").child(uid).child(daysLeft).set(newData)
+            return render_template("tracker.html", data=newData, daysLeft=daysLeft, today=today)
+        except:
+            return render_template("tracker.html", data="error", daysLeft="error", today="error")
+
+@app.route('/logout', methods=['GET','POST'])
+def logout():
+    #logout the user
+    session.pop("uid", None)
+    return render_template('index.html')
+
 
 @app.route('/dashboard', methods=['GET','POST'])
 def cal():
@@ -121,12 +187,9 @@ def cal():
 
     return render_template('dashboard.html', events = events_list)
 
-@app.route('/logout', methods=['GET','POST'])
-def logout():
-    #logout the user
-    return render_template('index.html');
 
-
+#secret key
+app.secret_key = b'_5askq478eqrbkhdfs]/'
 
 if __name__ =='__main__':
     app.run(debug=True)
