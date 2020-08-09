@@ -182,9 +182,6 @@ def checklist():
             days = abs((today - startDate).days)
             daysLeft = 14 - days
             today = today.strftime('%Y-%m-%d')
-            pastData = []
-            #get old data
-            pastData = getPastData(uid, days)
             #get new data
             newData = {
                 "date": today,
@@ -204,6 +201,8 @@ def checklist():
                 db.child("users").child(uid).child(daysLeft).update(newData)
             else:
                 db.child("users").child(uid).child(daysLeft).set(newData)
+            #get old data
+            pastData = getPastData(uid, days)
             return render_template("tracker.html", pastData=pastData, data=newData, daysLeft=daysLeft, today=today)
         except:
             return render_template("tracker.html", data="error", daysLeft="error", today="error")
