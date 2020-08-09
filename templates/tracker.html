@@ -46,6 +46,7 @@
                 <div class="count-display">
                     <table>
                         <tr>
+													  <!-- None = a future day, 0 = a healthy day, 1 = a day withh symptoms -->
 														{% for i in range(7)%}
 															{% if pastData[i] == None%}
 																<td><i class="fa fa-circle"></i></td>
