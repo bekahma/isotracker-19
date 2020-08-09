@@ -4,9 +4,10 @@
 body {
     font-family: 'Open Sans';
     background-image: url(../assets/backgrounds/landing_page.png);
-    background-size: cover;
+    /* background-size: cover;
     background-position: center;
     background-repeat: repeat-y;
+    */
     color: #472986;
 }
 
@@ -57,10 +58,17 @@ nav {
 .desc p {
     margin-left: 10%;
     margin-right: 10%;
+    padding-bottom: 8%;
 }
 
 .desc i {
     font-size: 45px;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+}
+
+.desc-background {
+    background-color: rgba(255,249,249,0.8);
+    border-width: 2px;
+    border-radius: 15%;
 }
