@@ -38,8 +38,12 @@ def loginAuth():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['Pass']
-        auth.sign_in_with_email_and_password('email','password')
-        return render_template('tracker.html')
+        try:
+            user = auth.sign_in_with_email_and_password(email,password)
+            return render_template('tracker.html')
+        except:
+            return render_template('index_login.html')
+
 
 @app.route('/register')
 def register():
